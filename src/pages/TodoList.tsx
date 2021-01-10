@@ -1,28 +1,50 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "antd/dist/antd.css"
 import { Input, Button, List } from "antd";
 import store from "../store/index";
-//寫完是是自己整理一下
-interface TodoListProps {
-
+import { changeInput } from "../store/actionType"
+//寫完自己整理一下 慢慢看一下整體的架構
+interface TodoListState {
+    inputValue: string,
+    list: string[],
 }
 
 
-export const TodoList: React.FC<TodoListProps> = ({ }) => {
-    const [state, setstate] = useState(store.getState())
-    console.log(state)
+export const TodoList: React.FC = ({ }) => {
+    const [state, setState] = useState<TodoListState>(store.getState())
+
+    useEffect(() => {
+        const storeChange = () => {
+            setState(store.getState())
+        }
+        store.subscribe(storeChange)
+        //subscribe功用 如果 redux 變化了調用方法 
+    }, [store])
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const action = {
+            type: changeInput,
+            value: e.target.value
+        }
+        store.dispatch(action)
+    }
+
+
     return (
         <div style={{ margin: "10px" }}>
             <div>
                 <Input
-                    placeholder="Write Somthing"
-                    style={{ width: "250px", marginRight: "10px" }} />
+                    placeholder={state.inputValue}
+                    style={{ width: "250px", marginRight: "10px" }}
+                    onChange={handleInputChange}
+                    value={state.inputValue}
+                />
                 <Button type="primary">增加</Button >
             </div>
             <div style={{ margin: "10px", width: "300px" }}>
                 <List
                     bordered //邊框
-                    dataSource={[]}
+                    dataSource={state.list}
                     renderItem={item => (<List.Item>{item}</List.Item>)} //小項是怎麼渲染的
                 />
             </div>

@@ -1,4 +1,4 @@
-import { changeInput, addList } from "./actionType"
+import { changeInput, addList, deleteList } from "./actionType"
 import { TodoListStateType, ActionType } from "../InterFace"
 
 const defaultState: TodoListStateType = {
@@ -11,12 +11,14 @@ export default (state = defaultState, action: ActionType) => {
     switch (action.type) { //Reducer只能接收state
         case changeInput:
             newState.inputValue = action.value
-            console.log(state, action)
             return newState
         case addList:
-
             newState.list = [...newState.list, action.value]
             newState.inputValue = ""
+            return newState
+        case deleteList:
+            const filterState = newState.list.filter((list: string, index: number) => index !== action.value);
+            newState.list = filterState
             return newState
     }
     return state

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "antd/dist/antd.css"
 import { Input, Button, List } from "antd";
 import store from "../store/index";
-import { changeInput, addList } from "../store/actionType"
+import { changeInput, addList, deleteList } from "../store/actionType"
 import { TodoListStateType } from "../InterFace"
 //寫完自己整理一下 慢慢看一下整體的架構
 
@@ -35,6 +35,15 @@ export const TodoList: React.FC = ({ }) => {
         store.dispatch(action)
     }
 
+    const handleDelete = (id: number) => {
+        console.log("eeeee", id)
+        const action = {
+            type: deleteList,
+            value: id
+        }
+        store.dispatch(action)
+    }
+
     return (
         <div style={{ margin: "10px" }}>
             <div>
@@ -50,7 +59,14 @@ export const TodoList: React.FC = ({ }) => {
                 <List
                     bordered //邊框
                     dataSource={listState.list}
-                    renderItem={item => (<List.Item>{item}</List.Item>)} //小項是怎麼渲染的
+                    renderItem={(item, id) => (
+                        <List.Item>
+                            <List.Item.Meta description={item} />
+                            <div>
+                                <Button onClick={() => handleDelete(id)} type="default">X</Button>
+                            </div>
+                        </List.Item>
+                    )} //小項是怎麼渲染的
                 />
             </div>
         </div>

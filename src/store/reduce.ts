@@ -1,4 +1,4 @@
-import { changeInput } from "./actionType"
+import { changeInput, addList } from "./actionType"
 import { TodoListStateType, ActionType } from "../InterFace"
 
 const defaultState: TodoListStateType = {
@@ -7,11 +7,16 @@ const defaultState: TodoListStateType = {
 }
 
 export default (state = defaultState, action: ActionType) => {
+    let newState = JSON.parse(JSON.stringify(state))
     switch (action.type) { //Reducer只能接收state
         case changeInput:
-            let newState = JSON.parse(JSON.stringify(state))
             newState.inputValue = action.value
             console.log(state, action)
+            return newState
+        case addList:
+
+            newState.list = [...newState.list, action.value]
+            newState.inputValue = ""
             return newState
     }
     return state

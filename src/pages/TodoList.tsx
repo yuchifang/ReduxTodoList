@@ -3,15 +3,13 @@ import "antd/dist/antd.css"
 import { Input, Button, List } from "antd";
 import store from "../store/index";
 import { changeInput } from "../store/actionType"
+import { TodoListStateType } from "../InterFace"
 //寫完自己整理一下 慢慢看一下整體的架構
-interface TodoListState {
-    inputValue: string,
-    list: string[],
-}
+
 
 
 export const TodoList: React.FC = ({ }) => {
-    const [state, setState] = useState<TodoListState>(store.getState())
+    const [state, setState] = useState<TodoListStateType>(store.getState())
 
     useEffect(() => {
         const storeChange = () => {

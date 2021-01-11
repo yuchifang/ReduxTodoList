@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react'
 import "antd/dist/antd.css"
 import { Input, Button, List } from "antd";
 import store from "../store/index";
-import { changeInput, addList, deleteList } from "../store/actionType"
-import { TodoListStateType } from "../InterFace"
+import { CHANGE_INPUT, ADD_LIST, DELETE_LIST } from "../store/actionTypes"
+import { TodoListStoreType } from "../InterFace"
+import { changeInputAction, addListAction, deleteListAction } from "../store/actionCreateors"
 //寫完自己整理一下 慢慢看一下整體的架構
 
-
+import { TodoListUI } from "../components/TodoListUI"
 
 export const TodoList: React.FC = ({ }) => {
-    const [listState, setListState] = useState<TodoListStateType>(store.getState())
+    const [listState, setListState] = useState<TodoListStoreType>(store.getState())
 
     useEffect(() => {
         const storeChange = () => {
@@ -20,55 +21,25 @@ export const TodoList: React.FC = ({ }) => {
     }, [store])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const action = {
-            type: changeInput,
-            value: e.target.value
-        }
+        const action = changeInputAction(e.target.value)
         store.dispatch(action)
     }
 
-    const handleClick = () => {
-        const action = {
-            type: addList,
-            value: listState.inputValue
-        }
+    const handleAdd = () => {
+        const action = addListAction(listState.inputValue)
         store.dispatch(action)
     }
 
     const handleDelete = (id: number) => {
-        console.log("eeeee", id)
-        const action = {
-            type: deleteList,
-            value: id
-        }
+        const action = deleteListAction(id)
         store.dispatch(action)
     }
 
     return (
-        <div style={{ margin: "10px" }}>
-            <div>
-                <Input
-                    placeholder={listState.inputValue}
-                    style={{ width: "250px", marginRight: "10px" }}
-                    onChange={handleInputChange}
-                    value={listState.inputValue}
-                />
-                <Button onClick={handleClick} type="primary">增加</Button >
-            </div>
-            <div style={{ margin: "10px", width: "300px" }}>
-                <List
-                    bordered //邊框
-                    dataSource={listState.list}
-                    renderItem={(item, id) => (
-                        <List.Item>
-                            <List.Item.Meta description={item} />
-                            <div>
-                                <Button onClick={() => handleDelete(id)} type="default">X</Button>
-                            </div>
-                        </List.Item>
-                    )} //小項是怎麼渲染的
-                />
-            </div>
-        </div>
+        <TodoListUI
+            handleInputChange={handleInputChange}
+            listState={listState}
+            handleDelete={handleDelete}
+            handleAdd={handleAdd} />
     );
 }

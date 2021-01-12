@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "antd/dist/antd.css"
 import store from "../store/index";
 import { TodoListStoreType } from "../InterFace"
-import { changeInputAction, addListAction, deleteListAction, getInitListAction } from "../store/actionCreateors"
+import { changeInputAction, addListAction, deleteListAction, geyMyListAction } from "../store/actionCreateors"
 import axios from "axios"
 
 //寫完自己整理一下 慢慢看一下整體的架構
@@ -13,17 +13,9 @@ export const TodoList: React.FC = ({ }) => {
     const [listState, setListState] = useState<TodoListStoreType>(store.getState())
 
     useEffect(() => {
-        const getData = () => {
-            axios.get("http://localhost:3000/list").then((res) => {
-                console.log("res", res)
-                const action = getInitListAction(res.data)
-                store.dispatch(action)
-            }).catch((res) => {
-                console.log("res", res)
-            })
-        }
 
-        getData()
+        const action: any = geyMyListAction()
+        store.dispatch(action)
     }, [])
 
     useEffect(() => {
@@ -49,7 +41,6 @@ export const TodoList: React.FC = ({ }) => {
         const action = deleteListAction(id)
         store.dispatch(action)
     }
-
     return (
         <TodoListUI
             handleInputChange={handleInputChange}

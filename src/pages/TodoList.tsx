@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react'
 import "antd/dist/antd.css"
 import store from "../store/index";
 import { TodoListStoreType } from "../InterFace"
-import { getDataAction, changeInputAction, addListAction, deleteListAction, getInitListAction } from "../store/actionCreateors"
-import axios from "axios"
+import { getDataAction, changeInputAction, addListAction, deleteListAction } from "../store/actionCreateors"
 
 //寫完自己整理一下 慢慢看一下整體的架構
 
 import { TodoListUI } from "../components/TodoListUI"
 
-export const TodoList: React.FC = ({ }) => {
+export const TodoList: React.FC = () => {
     const [listState, setListState] = useState<TodoListStoreType>(store.getState())
 
     useEffect(() => {

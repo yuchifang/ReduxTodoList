@@ -23,16 +23,15 @@ export const getInitListAction = (data: any) => ({
 
 export const getDataAction = () => {
 
-    return () => {
+    return (dispatch: any) => {
         axios.get("http://localhost:3000/list").then((res) => {
+            console.log("33333333333333333")
+            const data = res.data
+            const action = getInitListAction(data)
+            dispatch(action)
+        }).catch((res) => {
             console.log("res", res)
-            const action = getInitListAction(res.data)
-            // store.dispatch(action)
         })
-        console.log("33333333")
-        // .catch((res) => {
-        //     console.log("res", res)
-        // })
     }
 
 }

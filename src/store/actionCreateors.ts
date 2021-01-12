@@ -25,7 +25,6 @@ export const getDataAction = () => {
 
     return (dispatch: any) => {
         axios.get("http://localhost:3000/list").then((res) => {
-            console.log("33333333333333333")
             const data = res.data
             const action = getInitListAction(data)
             dispatch(action)

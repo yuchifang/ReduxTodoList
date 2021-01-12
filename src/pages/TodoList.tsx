@@ -12,7 +12,6 @@ export const TodoList: React.FC = () => {
     const [listState, setListState] = useState<TodoListStoreType>(store.getState())
 
     useEffect(() => {
-        console.log("2222222222");
         const action: any = getDataAction()
         store.dispatch(action)
     }, [])
@@ -40,7 +39,6 @@ export const TodoList: React.FC = () => {
         const action = deleteListAction(id)
         store.dispatch(action)
     }
-    console.log("1111111111");
     return (
         <TodoListUI
             handleInputChange={handleInputChange}

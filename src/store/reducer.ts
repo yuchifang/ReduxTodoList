@@ -1,4 +1,4 @@
-import { CHANGE_INPUT, ADD_LIST, DELETE_LIST } from "./actionTypes"
+import { CHANGE_INPUT, ADD_LIST, DELETE_LIST, GET_INIT_LIST } from "./actionTypes"
 import { TodoListStoreType, ActionType } from "../InterFace"
 
 const defaultState: TodoListStoreType = {
@@ -19,6 +19,9 @@ export default (state = defaultState, action: ActionType) => {
         case DELETE_LIST:
             const filterState = newState.list.filter((list: string, index: number) => index !== action.value);
             newState.list = filterState
+            return newState
+        case GET_INIT_LIST:
+            newState.list = action.value;
             return newState
     }
     return state

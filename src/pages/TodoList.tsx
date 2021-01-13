@@ -3,8 +3,6 @@ import "antd/dist/antd.css"
 import store from "../store/index";
 import { TodoListStoreType } from "../InterFace"
 import { changeInputAction, addListAction, deleteListAction, geyMyListAction } from "../store/actionCreateors"
-import axios from "axios"
-
 //寫完自己整理一下 慢慢看一下整體的架構
 
 import { TodoListUI } from "../components/TodoListUI"
@@ -33,8 +31,13 @@ export const TodoList: React.FC = ({ }) => {
     }
 
     const handleAdd = () => {
-        const action = addListAction(listState.inputValue)
-        store.dispatch(action)
+        if (listState.inputValue !== "") {
+
+            const action = addListAction(listState.inputValue)
+            store.dispatch(action)
+        } else {
+            alert("請輸入字串")
+        }
     }
 
     const handleDelete = (id: number) => {

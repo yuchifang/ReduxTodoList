@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "antd/dist/antd.css"
 import { TodoListStoreType } from "../InterFace"
-import { changeInputAction, addListAction, deleteListAction, geyMyListAction } from "../store/actionCreateors"
+import { changeInputAction, addListAction, deleteListAction, callSagaAction } from "../store/actionCreateors"
 //寫完自己整理一下 慢慢看一下整體的架構
 import { useDispatch, useSelector } from "react-redux"
 import { TodoListUI } from "../components/TodoListUI"
@@ -13,7 +13,7 @@ export const TodoList: React.FC = ({ }) => {
 
     useEffect(() => {
 
-        const action: any = geyMyListAction()
+        const action: any = callSagaAction()
         dispatch(action)
     }, [])
 

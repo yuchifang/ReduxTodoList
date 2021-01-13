@@ -1,15 +1,15 @@
 import axios from "axios"
 import { takeEvery, put } from "redux-saga/effects"
-import { GET_SAGA_LIST } from "./actionTypes"
-import { getInitListAction } from "./actionCreateors"
+import { CALL_SAGA } from "./actionTypes"
+import { getAioxsDataAction } from "./actionCreateors"
 //generator
 function* mySaga() {
 
-    yield takeEvery(GET_SAGA_LIST, getList)
+    yield takeEvery(CALL_SAGA, getAxiosList)
 }
-function* getList() {
+function* getAxiosList() {
     const res = yield axios.get("http://localhost:3000/list")
-    const action = getInitListAction(res.data)
+    const action = getAioxsDataAction(res.data)
     yield put(action)
     // axios.get("http://localhost:3000/list")
     //     .then(res => {
